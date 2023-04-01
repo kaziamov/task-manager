@@ -1,4 +1,20 @@
 from pathlib import Path
+from urllib.parse import urlparse
+import dotenv
+import os
+
+
+env_path = os.path.join(os.path.dirname(__file__), '.env')
+dotenv.load_dotenv()
+parsed_url = urlparse(os.environ.get('DATABASE_URL'))
+
+
+DB_HOST = parsed_url.hostname
+DB_PORT = parsed_url.port
+DB_NAME = parsed_url.path[1:]
+DB_USER = parsed_url.username
+DB_PASS = parsed_url.password
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'task_manager',
 ]
 
 MIDDLEWARE = [
@@ -63,8 +80,12 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASS,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
     }
 }
 
