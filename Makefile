@@ -1,5 +1,3 @@
-dev:
-	poetry run python manage.py runserver
 
 migrate:
 	poetry run python manage.py makemigrations && poetry run python manage.py migrate
@@ -13,4 +11,8 @@ superuser:
 deploy:
 	railway up
 
+dev:
+	poetry run python manage.py runserver
+
 start:
+	poetry run gunicorn task_manager.wsgi
