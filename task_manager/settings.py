@@ -8,6 +8,7 @@ env_path = os.path.join(os.path.dirname(__file__), '.env')
 dotenv.load_dotenv()
 parsed_url = urlparse(os.environ.get('DATABASE_URL'))
 host = urlparse(os.environ.get('HOST'))
+debug_status = urlparse(os.environ.get('DEBUG'))
 
 
 DB_HOST = parsed_url.hostname
@@ -28,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7v9zm*!z$*c=@n3*5b5h2q(gw!26d0lq%b#q88%y=^@9$n&u*!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = debug_status
 
 ALLOWED_HOSTS = [host, "127.0.0.1", "0.0.0.0", 'webserver']
 
