@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from hexlet_django_blog import views
+from task_manager import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', )
+    path('', admin.site.urls)
 ]
