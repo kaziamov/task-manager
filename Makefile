@@ -1,8 +1,10 @@
-include .env
+# include .env
 
 PROJECT_NAME := task_manager
-PORT := ${PORT}
-HOST := ${HOST}
+# PORT := ${PORT}
+# HOST := ${HOST}
+PORT := 8000
+HOST := 0.0.0.0
 
 
 shell:
