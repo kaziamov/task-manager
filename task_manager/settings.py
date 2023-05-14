@@ -3,38 +3,30 @@ from urllib.parse import urlparse
 import dotenv
 import os
 
-
-env_path = os.path.join(os.path.dirname(__file__), '.env')
 dotenv.load_dotenv()
-parsed_url = urlparse(os.environ.get('DATABASE_URL'))
-host = urlparse(os.environ.get('HOST'))
-debug_status = urlparse(os.environ.get('DEBUG'))
 
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_NAME = os.getenv('DB_NAME')
+DB_USER = os.getenv('DB_USER')
+DB_PASS = os.getenv('DB_PASS')
 
-DB_HOST = parsed_url.hostname
-DB_PORT = parsed_url.port
-DB_NAME = parsed_url.path[1:]
-DB_USER = parsed_url.username
-DB_PASS = parsed_url.password
+DATABASE_URL = urlparse(os.getenv('DATABASE_URL'))
 
+if DATABASE_URL:
+    DB_HOST = DATABASE_URL.hostname
+    DB_PORT = DATABASE_URL.port
+    DB_NAME = DATABASE_URL.path[1:]
+    DB_USER = DATABASE_URL.username
+    DB_PASS = DATABASE_URL.password
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = os.getenv("SECRET_KEY")
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+DEBUG = os.getenv("DEBUG", False)
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7v9zm*!z$*c=@n3*5b5h2q(gw!26d0lq%b#q88%y=^@9$n&u*!'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = debug_status
-
-ALLOWED_HOSTS = [host, "127.0.0.1", "0.0.0.0", 'webserver']
-
-
-# Application definition
+ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", os.getenv("ALLOWED_HOST")]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -76,10 +68,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'task_manager.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -90,10 +78,6 @@ DATABASES = {
         'PORT': DB_PORT,
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -110,10 +94,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -122,13 +102,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
