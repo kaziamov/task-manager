@@ -15,7 +15,7 @@ deploy:
 	railway up
 
 dev: freeze
-	docker-compose up --force-recreate
+	docker-compose up
 
 up:
 	docker-compose up
@@ -32,7 +32,7 @@ start-db:
 	docker-compose -f docker-compose.db.yml up
 
 lint:
-	poetry run flake8 ab_test_api
+	poetry run flake8 $(PROJECT_NAME)
 
 freeze:
 	poetry export --without-hashes --format=requirements.txt > requirements.txt
