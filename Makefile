@@ -30,6 +30,10 @@ start:
 start-server:
 	gunicorn $(PROJECT_NAME).wsgi --bind $(HOST):$(PORT)
 
+start-migrate:
+	python manage.py makemigrations
+	&& python manage.py migrate
+
 start-db:
 	docker-compose -f docker-compose.db.yml up
 
