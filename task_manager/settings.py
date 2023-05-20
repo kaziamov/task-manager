@@ -5,21 +5,6 @@ import os
 
 dotenv.load_dotenv()
 
-DB_HOST = os.getenv('DB_HOST')
-DB_PORT = os.getenv('DB_PORT')
-DB_NAME = os.getenv('DB_NAME')
-DB_USER = os.getenv('DB_USER')
-DB_PASS = os.getenv('DB_PASS')
-
-DATABASE_URL = urlparse(os.getenv('DATABASE_URL'))
-
-if DATABASE_URL:
-    DB_HOST = DATABASE_URL.hostname
-    DB_PORT = DATABASE_URL.port
-    DB_NAME = DATABASE_URL.path[1:]
-    DB_USER = DATABASE_URL.username
-    DB_PASS = DATABASE_URL.password
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -70,14 +55,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'task_manager.wsgi.application'
 
+DATABASE_URL = urlparse(os.getenv('DATABASE_URL'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASS,
-        'HOST': DB_HOST,
-        'PORT': DB_PORT,
+        'NAME': DATABASE_URL.path[1:] if DATABASE_URL else os.getenv('DB_NAME'),
+        'USER': DATABASE_URL.username if DATABASE_URL else os.getenv('DB_USER'),
+        'PASSWORD': DATABASE_URL.password if DATABASE_URL else os.getenv('DB_PASS'),
+        'HOST': DATABASE_URL.hostname if DATABASE_URL else os.getenv('DB_HOST'),
+        'PORT': DATABASE_URL.port if DATABASE_URL else os.getenv('DB_PORT'),
     }
 }
 
