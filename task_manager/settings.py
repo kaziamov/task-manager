@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'task_manager',
+    'task_manager.users',
 ]
 
 MIDDLEWARE = [
@@ -59,11 +60,16 @@ DATABASE_URL = urlparse(os.getenv('DATABASE_URL'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DATABASE_URL.path[1:] if DATABASE_URL else os.getenv('DB_NAME'),
-        'USER': DATABASE_URL.username if DATABASE_URL else os.getenv('DB_USER'),
-        'PASSWORD': DATABASE_URL.password if DATABASE_URL else os.getenv('DB_PASS'),
-        'HOST': DATABASE_URL.hostname if DATABASE_URL else os.getenv('DB_HOST'),
-        'PORT': DATABASE_URL.port if DATABASE_URL else os.getenv('DB_PORT'),
+        # 'NAME': DATABASE_URL.path[1:] if DATABASE_URL else os.getenv('DB_NAME'),
+        # 'USER': DATABASE_URL.username if DATABASE_URL else os.getenv('DB_USER'),
+        # 'PASSWORD': DATABASE_URL.password if DATABASE_URL else os.getenv('DB_PASS'),
+        # 'HOST': DATABASE_URL.hostname if DATABASE_URL else os.getenv('DB_HOST'),
+        # 'PORT': DATABASE_URL.port if DATABASE_URL else os.getenv('DB_PORT'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASS'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
