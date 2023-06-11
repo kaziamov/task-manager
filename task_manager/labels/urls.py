@@ -1,15 +1,11 @@
-# GET /labels/ — страница со списком всех меток
-# GET /labels/create/ — страница создания метки
-# POST /labels/create/ — создание новой метки
-# GET /labels/<int:pk>/update/ — страница редактирования метки
-# POST /labels/<int:pk>/update/ — обновление метки
-# GET /labels/<int:pk>/delete/ — страница удаления метки
-# POST /labels/<int:pk>/delete/ — удаление метки
-
 from django.urls import path as p
-from task_manager.views import HomePageView
+
+from .views import LabelsListView, LabelCreateView, LabelUpdateView, LabelDeleteView
 
 
 urlpatterns = [
-    p('', HomePageView.as_view()),
+    p('', LabelsListView.as_view(), name='labels_list'),
+    p('create/', LabelCreateView.as_view(), name='label_create'),
+    p('<int:pk>/update', LabelUpdateView.as_view(), name='label_update'),
+    p('<int:pk>/delete', LabelDeleteView.as_view(), name='label_delete'),
 ]
