@@ -23,6 +23,10 @@ INSTALLED_APPS = [
     'bootstrap4',
     'task_manager',
     'task_manager.users',
+    'task_manager.tasks',
+    'task_manager.labels',
+    'task_manager.statuses',
+    'task_manager.templatetags'
 ]
 
 MIDDLEWARE = [
@@ -111,6 +115,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login'
+
+REGISTRATION_AUTO_LOGIN = True
+
+APPEND_SLASH = True
 
 # ROLLBAR = {
 #     'access_token': 'f91db775b4824a4c9f5d9b6234fbfd20',
