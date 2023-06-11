@@ -1,10 +1,13 @@
-# include .env
+include .env
 
 PROJECT_NAME := task_manager
 PORT := ${PORT}
 HOST := ${HOST}
 # PORT := 8000
 # HOST := 0.0.0.0
+
+dev:
+	poetry run python manage.py runserver
 
 
 shell:
@@ -16,7 +19,7 @@ superuser:
 deploy:
 	railway up
 
-dev: freeze
+dev-up: freeze
 	docker-compose up
 
 up:
@@ -30,10 +33,10 @@ start:
 start-server:
 	gunicorn $(PROJECT_NAME).wsgi --bind $(HOST):$(PORT)
 
-start-migrate:
-	python manage.py makemigrations && python manage.py migrate
+migrate:
+	poetry run python manage.py makemigrations && poetry run python manage.py migrate
 
-start-db:
+db:
 	docker-compose -f docker-compose.db.yml up
 
 lint:
@@ -45,10 +48,7 @@ freeze:
 install:
 	poetry install
 
-migrate:
-	poetry run python $(PROJECT_NAME)/migration.py
-
-stop:
+rm:
 	docker-compose stop && \
 	docker-compose rm && \
 	sudo rm -rf pgdata/
