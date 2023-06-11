@@ -7,9 +7,13 @@
 # POST /statuses/<int:pk>/delete/ — удаление статуса
 
 from django.urls import path as p
-from task_manager.views import HomePageView
+
+from .views import StatusesListView, StatusCreateView, StatusUpdateView, StatusDeleteView
 
 
 urlpatterns = [
-    p('', HomePageView.as_view()),
+    p('', StatusesListView.as_view(), name='statuses_list'),
+    p('create/', StatusCreateView.as_view(), name='status_create'),
+    p('<int:pk>/update', StatusUpdateView.as_view(), name='status_update'),
+    p('<int:pk>/delete', StatusDeleteView.as_view(), name='status_delete'),
 ]
