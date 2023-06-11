@@ -8,9 +8,13 @@
 # GET /tasks/<int:pk>/ — страница просмотра задачи
 
 from django.urls import path as p
-from task_manager.views import HomePageView
+
+from .views import TaskCreateView, TaskDeleteView, TaskUpdateView, TasksListView
 
 
 urlpatterns = [
-    p('', HomePageView.as_view()),
+    p('', TasksListView.as_view(), name='tasks_list'),
+    p('create/', TaskCreateView.as_view(), name='task_create'),
+    p('<int:pk>/update', TaskUpdateView.as_view(), name='task_update'),
+    p('<int:pk>/delete', TaskDeleteView.as_view(), name='task_delete'),
 ]
