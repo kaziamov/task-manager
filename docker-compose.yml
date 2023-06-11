@@ -2,6 +2,7 @@ version: '3.3'
 
 services:
   db:
+    # restart: always
     image: postgres:15
     environment:
       POSTGRES_USER: ${DB_USER}
@@ -13,6 +14,7 @@ services:
       - 5432:5432
 
   web:
+    # restart: always
     image: python:3.11.2
     build:
       context: .
@@ -22,7 +24,9 @@ services:
       - db
     network_mode: 'host'
     ports:
-      - 8000:8000
+      - 8001:8000
     command: bash -c "cd app
-                      && pip install -r requirements.txt
-                      && make start-server"
+                      && pip install poetry
+                      && poetry install
+                      && make migrate
+                      && make dev"
